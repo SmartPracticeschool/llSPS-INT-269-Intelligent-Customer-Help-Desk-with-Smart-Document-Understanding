@@ -1,0 +1,174 @@
+[
+    {
+        "id": "b95b40a7.88861",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b77c78cb.f50ad8",
+        "type": "ui_form",
+        "z": "b95b40a7.88861",
+        "name": "",
+        "label": "",
+        "group": "2b62a6f5.9059ca",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Enter the input",
+                "value": "input",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "input": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 121,
+        "y": 220,
+        "wires": [
+            [
+                "b9da8dc7.8563e"
+            ]
+        ]
+    },
+    {
+        "id": "b9da8dc7.8563e",
+        "type": "function",
+        "z": "b95b40a7.88861",
+        "name": "",
+        "func": "msg.payload=msg.payload.input;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 140,
+        "wires": [
+            [
+                "c09d865c.5d08a8",
+                "1746ff02.0df3b1"
+            ]
+        ]
+    },
+    {
+        "id": "c09d865c.5d08a8",
+        "type": "ui_text",
+        "z": "b95b40a7.88861",
+        "group": "2b62a6f5.9059ca",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "input",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 380,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "1746ff02.0df3b1",
+        "type": "watson-conversation-v1",
+        "z": "b95b40a7.88861",
+        "name": "",
+        "workspaceid": "23fbf589-40a7-48e6-97f8-cf0e75c7a57a",
+        "multiuser": false,
+        "context": false,
+        "empty-payload": false,
+        "service-endpoint": "https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/9961bfcf-85b5-4eaa-8e03-2c985416254e",
+        "timeout": "",
+        "optout-learning": false,
+        "x": 460,
+        "y": 80,
+        "wires": [
+            [
+                "f7d3309f.5be01",
+                "5bb8725f.f3a73c"
+            ]
+        ]
+    },
+    {
+        "id": "f7d3309f.5be01",
+        "type": "debug",
+        "z": "b95b40a7.88861",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 690,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "5bb8725f.f3a73c",
+        "type": "function",
+        "z": "b95b40a7.88861",
+        "name": "",
+        "func": "msg.payload.text=\"\"; \nif(msg.payload.context.webhook_result_1){ \nfor(var i in msg.payload.context.webhook_result_1.results){ \n msg.payload.text=msg.payload.text+\"\\n\"+msg.payload.context.webhook_result_1.results[i].text; \n} \nmsg.payload=msg.payload.text; \n}\nelse \nmsg.payload = msg.payload.output.text[0]; \nreturn msg; \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 661,
+        "y": 220,
+        "wires": [
+            [
+                "2d7b7f38.5c5ba"
+            ]
+        ]
+    },
+    {
+        "id": "2d7b7f38.5c5ba",
+        "type": "ui_text",
+        "z": "b95b40a7.88861",
+        "group": "d2d23e1f.3b31a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Message",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 750,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2b62a6f5.9059ca",
+        "type": "ui_group",
+        "z": "",
+        "name": "Customer care chatbot",
+        "tab": "bb58e747.8adc88",
+        "order": 1,
+        "disp": true,
+        "width": 9,
+        "collapse": false
+    },
+    {
+        "id": "d2d23e1f.3b31a",
+        "type": "ui_group",
+        "z": "",
+        "name": "Output",
+        "tab": "bb58e747.8adc88",
+        "order": 4,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "bb58e747.8adc88",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Tab",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
